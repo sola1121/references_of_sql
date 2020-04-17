@@ -1,0 +1,46 @@
+create or replace function f_key2shift(p_key varchar2)
+return varchar2
+as
+v_shift varchar2(100);
+k char(1);
+s number;
+begin
+  for i in 1..length(p_key) loop
+  k:=substr(p_key, i, 1);
+  s:=ascii(upper(k)) - ascii('A');
+  v_shift:=v_shift || lpad(s,2,'0');;
+  end loop;
+  return v_shift;
+end;
+
+
+create or replace function f_encrypt_caesar(p_plain_msg varchar2, p_key varchar2)
+return varchar2
+as
+v_encrypt_msg varchar2(5000):='';
+v_shift varchar2(100);
+c char(1);
+e char(1);
+k number :=-1;
+s number;
+begin
+v_shift := f_key2shift(p_key);
+for i in 1..length(p_plain_msg) loop
+  c:=substr(p_plain_msg,i,1);
+  k:=k+1;
+  s:=substr(v_shift, mod(k, length(p_key))+1,1);
+  if c between 'a' and 'z' then
+       e:=chr(mod(ascii(c)+s-97+26,26)+97);
+  elsif c between 'A' and 'Z' then
+      e:=chr(mod(ascii(c)+s-65+26,26)+97);
+  elsif c between '0' and '9' then
+      e:=chr(mod(ascii(c)+s-48+26,26)+97);
+  else
+       e:=c;
+       k:=k-1;
+end if;
+v_encrypt_msg := v_encrypt_msg || e;
+end loop;
+return v_encrypt_msg;
+end;
+

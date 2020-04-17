@@ -1,0 +1,101 @@
+**触发器:
+触发器是在对表进行插入（INSERT）、更新（UPDATE）或删除（DELETE）操作时自动执行的存储过程，它是一种特殊类型的存储过程。 
+触发器这种特殊类型的存储过程，是在基表被修改时自动执行的内嵌过程。 
+触发器是独立存储在数据库中的独立对象。触发器是现代数据库管理系统用于响应数据变化的一种机制。触发器是实现数据维护规则的有效机制。
+
+**事务:
+事务是一种机制、是一种操作序列，它包含了一组数据库操作命令，这组命令要么全部执行，要么全部不执行。因此事务是一个不可分割的工作逻辑单元。在数据库系统上执行并发操作时事务是作为最小的控制单元来使用的。这特别适用于多用户同时操作的数据通信系统。例如：订票、银行、保险公司以及证券交易系统等。
+
+---------------------------------触发器--------------------------------
+
+create trigger 触发器名
+on 表名
+触发时机  触发事件
+as
+SQL语句  
+
+
+---触发时机
+
+after 后触发器
+for 后触发器                        ----当操作执行完成后,再执行触发器
+
+instead of 前触发器            -----不执行操作,只执行触发器
+
+---触发事件
+
+insert   update   delete
+
+---两个特殊表
+
+inserted   deleted        临时表,与触发器中的表结构一样,希望插入的数据会在inserted表中,deleted表中为被删除的数据
+
+
+
+----------------事务
+
+Begin tran
+......
+commit tran  ---可以不写
+
+---事务回滚
+
+rollback
+
+
+
+if update用法
+
+
+
+**例:
+	select * into stu from Student
+	go	
+	create trigger T1 on stu
+	instead of update, insert
+	as
+	print '只读表'
+
+
+	create trigger T1 on stu
+	after insert, update
+	as
+	if exists (select * from inserted where sex not in ('男','女'))
+	rollback
+	else 
+	print '命令完成'
+
+	
+	create trigger T2 on stu 
+	instead of insert
+	as 
+	if exists (select * from inserted where sex not in ('男','女'))
+	print '数据有误'
+	else
+	print '成功'
+
+
+	create trigger T3 on stu
+	instead of update
+	as
+	if exists (select * from inserted where sex not in ('男','女'))
+	print '数据有误'
+	else 
+	update stu set sex=(select distinct sex from inserted)
+	where StudentID in(select StudentID from inserted)
+
+
+	alter trigger auto_update_studentnum on stu
+	after update, insert, delete
+	as
+	update cla set StudentNum=(select count(StudentID) from stu where ClassID=cla.ClassID)
+
+
+	alter trigger UN_delete_data on stu
+	after delete
+	as 
+	if exists(select * from grade where StudentID in(select StudentID from deleted))
+	begin
+	select * from deleted
+	rollback
+	end

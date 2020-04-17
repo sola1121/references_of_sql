@@ -1,0 +1,38 @@
+sqlplus
+
+conn system
+
+
+--查询系统时间
+SELECT sysdate FROM dual
+
+
+--查看当前用户
+SHOW USER
+
+
+select ename, emp.deptno, dept.deptno,dname
+from emp cross join dept
+order by empno;
+
+
+CREATE SEQUENCE [schema_name . ] sequence_name  
+    [ AS [ built_in_integer_type | user-defined_integer_type ] ]  
+    [ START WITH <constant> ]  
+    [ INCREMENT BY <constant> ]  
+    [ { MINVALUE [ <constant> ] } | { NO MINVALUE } ]  
+    [ { MAXVALUE [ <constant> ] } | { NO MAXVALUE } ]  
+    [ CYCLE | { NO CYCLE } ]  
+    [ { CACHE [ <constant> ] } | { NO CACHE } ]  
+    [ ; ]  
+
+
+create sequence emp_sequence 
+INCREMENT BY 1 -- 每次加几个
+START WITH 1 -- 从1开始计数
+NOMAXVALUE -- 不设置最大值
+NOCYCLE -- 一直累加，不循环
+CACHE 10;
+2、插入到表中，
+INSERT INTO emp VALUES
+(emp_sequence .nextval, 'LEWIS', 'CLERK',7902, SYSDATE, 1200, NULL, 20);

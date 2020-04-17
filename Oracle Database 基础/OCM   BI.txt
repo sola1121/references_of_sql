@@ -1,0 +1,4 @@
+OCM   oracle 认证大师
+
+
+BI 商业智能  pl/sql

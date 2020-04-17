@@ -1,0 +1,23 @@
+############################sql优化指导######################################
+
+declare
+  my_task_name varchar2(30);
+  my_sqltext clob;
+begin
+  my_sqltext :='';
+  my_task_name :=dbms_sqltune.create_tuning_task(
+      sql_text  =>my_sqltext,
+      user_name =>'xjgl',
+      scope     =>'comprehensive',
+      time_limit=>60,
+      task_name =>'bigtab_jointo_smalltab_sql',
+      description=>'XXX');
+   dbms_sqltune.execute_tuning_task(task_name=>'bigtab_jointo_smalltab_sql');
+end;
+##创建后验证是否完成
+select task_name,status from user_advisor_log where task_name='';
+##查看sql语句优化的建议
+select dbms_sqltune.report_tuning_task('bigtab_jointo_smalltab_sql') from dual;
+
+
+############################sql优化指导######################################

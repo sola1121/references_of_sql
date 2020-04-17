@@ -1,0 +1,113 @@
+sqlplus
+
+conn  system
+
+--查询系统时间
+SELECT  sysdate  FROM  dual;
+
+
+--查看当前用户
+SHOW  USER
+
+
+
+
+
+--2016-09-18
+
+SQL>CONN scott/tiger
+
+SQL>DESC  dept    --查看dept表结构
+
+SQL>DESC  emp    --查看emp表结构
+
+
+---模糊查询     
+1.  查询emp表中ename列中含有字母'e'的员工姓名和工资信息
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE ename  LIKE '%E%';
+
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE ename  LIKE '%e%';
+
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE ename  LIKE '%E%' OR  ename  LIKE '%e%';
+
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE lower(ename)  LIKE '%e%';
+
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE upper(ename)  LIKE '%E%';
+
+      ---字符串函数:  LOWER, UPPER, INITCAP
+     SELECT   lower('Good morning!')
+     FROM   dual;    ---小写
+     
+     SELECT   upper('Good morning!')
+     FROM   dual;    ---大写
+
+     SELECT   initcap('gooD morning!')
+     FROM   dual;     ---首字母大写
+
+     模糊查询通配符:  %  , _
+
+2.  查询emp表ename列第2个字母位'e'的员工姓名和工资信息	
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE lower(ename)  LIKE '_e%';
+
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE lower(ename)  LIKE '%e_';
+
+3.  查询emp表ename列含有字符'%'的员工姓名和工资信息
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE lower(ename)  LIKE '%%%';                 X
+
+     UPDATE   emp
+     SET    ename='SMI%TH'
+     WHERE  ename ='SMITH';
+
+     SELECT  ename FROM emp WHERE empno=7369;
+
+      SELECT  ename,   sal  
+      FROM   emp
+      WHERE lower(ename)  LIKE '%\%%'  ESCAPE  '\';
+
+        SELECT  ename,   sal  
+      FROM   emp
+      WHERE lower(ename)  LIKE '%$%%'  ESCAPE  '$';
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+

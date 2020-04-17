@@ -1,0 +1,199 @@
+------------------------------------------函数---------------------------------
+
+-------数学函数
+
+ABS ( numeric_expression )：返回给定数字表达式的绝对值
+
+ASIN、ACOS、ATAN ( float_expression)：返回反正弦、反余弦、反正切。
+
+SIN、COS、TAN、COT（float_expression）：返回正弦、余弦、余切。
+
+ATAN2 ( float_expression )：返回四个象限的反正切弧度值。
+
+DEGREES ( numeric_expression )：将给出的弧度值转化为相应的角度值。 
+
+RADIANS ( numeric_expression )：将给出的角度值转化为相应的弧度值。
+
+EXP ( float_expression )：返回所给的 float 表达式的指数值。
+
+LOG ( float_expression )：返回给定 float 表达式的自然对数。
+
+LOG10 ( float_expression )：返回给定 float 表达式的以 10 为底的对数。
+
+SQRT ( float_expression )：返回给定表达式的平方根。
+
+~ CEILING ( numeric_expression )：返回大于或等于所给数字表达式的最小整数。
+
+~ FLOOR ( numeric_expression )：返回小于或等于所给数字表达式的最大整数。
+
+~ ROUND ( numeric_expression , length)：将给定的数据四舍五入到给定的长度。
+
+SIGN ( numeric_expression )：返回表达式的正 (+1)、零 (0)或负(-1)号。
+
+PI ( )：常量3.14159265358979。
+
+~ RAND ( [ seed ] )：返回 0 到1 之间的随机float 值。
+
+
+
+-------字符串函数
+
+~ RIGHT ( char_expr , integer_expr )：返回字符串中从右边开始指定个数的字符。
+~ LEFT （char_expr , integer_expr ):返回字符串中从左边开始指定个数的字符。
+
+~ SUBSTRING ( expr , start , length )：返回指定表达式中从start位置开始长度位length的部分。
+
+REVERSE ( char_expr )：将字符表达式的求反。
+
+~ RTRIM ( char_expr )：去掉字符串后边（右边）的空格。
+~ LTRIM（char_expr ):去掉字符串前边（左边）的空格。
+
+SOUNDEX ( char_expr )：返回一个四位数代码，比较两个字符串的相似性。
+
+SPACE ( integer_expr)：返回长度位指定数据的空格串。
+
+STUFF ( char_expr1 , start , length , char_expr2 )：在char_expr1中，把从位置start开始、长度位length的字符串用char_expr2代替。
+
+STR ( float_expr [ , length [ , decimal ] ] )：把数值变成字符串返回，length是总长度，decimal是小数点右边的位数。
+
+UPPER ( char_expr )：返回将小写字符数据转换为大写的字符表达式。 
+
+
+**例：
+	select rtrim(StudentName)+' is a human.' from Student
+
+
+-------转换函数
+
+
+CAST（expression AS data_type）： 利用CAST函数可以将某一个数据类型强制转换为另一种数据类型。
+
+CONVERT（data_type[(length)],expression[,style]）: 允许用户把表达式从一种数据类型转换为另一种数据类型，并且还在日期的不同显示格式之间进行转换。
+style参数：提供了各种日期显示格式。 
+
+
+**例：
+	declare @i int
+	select @i=233
+	select cast（@i as varchar(6))
+
+	select convert(varchar(10),getdate(),101)
+
+
+-------日期函数
+
+DATEADD ( datepart , number, date )  以datepart指定的方式，返回date加上number之和。
+
+DATEDIFF ( datepart , startdate , enddate )  以datepart指定的方式，返回enddate与startdate之差。
+
+DATENAME ( datepart , date ) 返回日期date中datepart指定部分所对应的字符串。
+
+DATEPART ( datepart , date ) 返回日期date中datepart指定部分所对应的整数值。
+
+yyyy/mm/dd
+
+
+-------系统函数
+
+COALESCE：返回其参数中第一个非空表达式。
+
+COL_NAME：:返回表中指定字段的名称，即列名。
+
+COL_LENGTH：返回指定字段的长度值。
+
+DB_ID：返回数据库的编号。
+
+DB_NAME：返回数据库的名称。
+
+DATALENGTH：返回任何数据表达式的实际长度。
+
+GETANSINULL：返回数据库原默认空值设置。
+
+HOST_ID：返回服务器端计算机的ID号。
+
+HOST_NAME：返回服务器端计算机的名称。
+
+IDENT_INCR：返回表中标识性字段的增值量。
+
+IDENT_SEED：返回表中标识性字段的初值。
+
+ISDATE：检查给定的表达式是否为有效的日期格式。
+
+ISNULL：用指定值替换表达式中的指定空值。
+
+INDEX_COL：返回索引的列名。
+
+ISNUMERIC：检查给定的表达式是否为一个有效的数字格式。
+
+NULLIF：如果两个指定的表达式相等，则返回空值。
+
+OBJECT_ID：返回数据库对象的编号。
+
+OBJECT_NAME：返回数据库对象的名称。
+
+SUSER_SID：返回服务器用户的安全帐户号。
+
+SUSER_NAME：返回服务器用户的登录名。
+
+USER_ID：返回用户的数据库ID号。
+
+USER_NAME：返回用户的数据库用户名。
+
+STATS_DATE：返回最新的索引统计日期。
+
+
+**例:
+	select isnull(homeaddr,'无地址') from Student
+
+
+
+-------用户自定义函数
+
+创建用户自定义函数的语法形式如下：
+
+ CREATE FUNCTION 函数名（形参名称 AS 数据类型）
+ RETURNS 返回数据类型
+ BEGIN
+ 函数内容
+ RETURN 表达式
+ END
+
+ 调用用户自定义函数的基本语法： 
+
+   变量=用户名.函数名（实际参数列表）
+
+在调用返回数值的用户自定义函数时，一定要在函数名的前面加上用户名，否则会出现“函数名不是可以识别的函数名”的错误提示信息
+
+在相应的数据库中的可编程性中可以找到所生成的自定义函数
+
+
+**例:
+	create function NameGrade(@SName as varchar(8))
+	returns numeric(5, 1)
+	begin 
+	declare @SGrade numeric(5, 1)
+	select @SGrade=Grade from grade where StudentID=(select StudentID from Student where StudentName=@SName)
+	return @SGrade
+	end
+
+	alter function classNum(@cname varchar(8))
+	returns int
+	begin
+	declare @nameofclass varchar(12)
+	select @nameofclass=count(StudentID) from student
+	join class on class.ClassID=student.ClassID
+	where Class.ClassID in (@cname)
+	return @nameofclass
+	end
+
+
+-------表值函数
+
+USE sales
+GO
+CREATE FUNCTION proid (@id char(6))
+RETURNS TABLE
+AS
+RETURN (SELECT * FROM Products WHERE ProductID=@id )
+
+其生成一个表

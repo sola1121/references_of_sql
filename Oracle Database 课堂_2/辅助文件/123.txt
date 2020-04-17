@@ -1,0 +1,56 @@
+cd $ORACLE_HOME/network/ad查看你的监听配置状态
+ls -lrt |grep alertmin   查看
+
+LSNR1526=
+  (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=192.168.94.2)(PORT=1526))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc1))))
+
+
+LISTENER=
+  (DESCRIPTION=
+    (ADDRESS_LIST=
+      (ADDRESS=(PROTOCOL=tcp)(HOST=192.168.94.2)(PORT=1521))
+      (ADDRESS=(PROTOCOL=ipc)(KEY=extproc))))
+SID_LIST_LISTENER=
+  (SID_LIST=
+    (SID_DESC=
+      (GLOBAL_DBNAME=db1)
+      (ORACLE_HOME=/u01/app/oracle/product/db)
+      (SID_NAME=DB1))
+    (SID_DESC=
+      (SID_NAME=plsextproc)
+      (ORACLE_HOME=/u01/app/oracle/product/db)
+      (PROGRAM=extproc)))
+
+
+
+DB1 =
+  (DESCRIPTION =
+   (ADDRESS = (PROTOCOL = TCP)(HOST =192.168.29.12)(PORT = 1521))
+
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = db1)
+    )
+  )
+LSNR1526 =
+          (ADDRESS = (PROTOCOL = TCP)(HOST =192.168.29.12)(PORT = 1526))
+
+DB1526 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST =192.168.29.12)(PORT = 1526))
+
+    (CONNECT_DATA =
+      (SERVER = shared)
+      (SERVICE_NAME = db1)    
+    )       
+  )         
+  DB11G_FS= 
+        (DESCRIPTION=
+          (ADDRESS=(PROTOCOL=tcp)(HOST=192.168.29.12)(PORT=1521))
+          (ADDRESS=(PROTOCOL=tcp)(HOST=192.168.29.12)(PORT=1526))
+          (FAILOVER=ON)
+          (CONNECT_DATA=
+            (SERVICE_NAME=DB1)))  

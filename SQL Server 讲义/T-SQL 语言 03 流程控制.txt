@@ -1,0 +1,72 @@
+---------------------------------流程控制-----------------------------
+
+
+----批处理语句
+go
+
+利用批处理语句来提高程序的执行效率。
+批处理是使用GO语句将多条SQL语句进行分隔，其中每两个GO之间的SQL语句就是一个批处理单元。
+一个批处理中可以只包含一条语句，也可以包含多条语句 
+若编译错误，则均不执行
+若执行错误，前面执行的语句不受影响
+
+
+当利用批处理时注意以下规则：
+CREATE DEFAULT、CREATE PROCEDURE、CREATE RULE、CREATE TRIGGER 和 CREATE VIEW 语句不能在批处理中与其它语句组合使用。
+批处理必须以 CREATE 语句开始。所有跟在该批处理后的其它语句将被解释为第一个 CREATE 语句定义的一部分。
+不能在同一个批处理中更改表，然后引用新列。
+如果 EXECUTE 语句是批处理中的第一句，则不需要 EXECUTE 关键字。如果 EXECUTE 语句不是批处理中的第一条语句，则需要 EXECUTE 关键字。
+在书写批处理语句时，需要使用GO语句作为批处理命令的结束标志。
+
+-------流程控制语句
+
+----Begin...end 语句
+
+在if中使用Begin...end:
+
+	DECLARE   @ErrorSaveVariable  int
+	IF  (@@ERROR <> 0)
+	BEGIN
+  	  SET @ErrorSaveVariable = @@ERROR
+ 	  PRINT
+	 'Error encountered, ' +  CAST(@ErrorSaveVariable AS VARCHAR(10))
+	END
+
+
+----If...else.... 语句
+
+----case语句
+
+case
+   when 条件1 then 结果1
+   when 条件2 then 结果2
+   ...
+   when 条件n then 结果n
+   else 默认结果
+end
+
+
+----while...continue...break 语句
+
+declare @N int
+declare @sum int
+set @N=0
+set @sum=0
+while @N<100
+begin
+set @N=@N+1
+set @sum=@sum+@N
+end
+print @sum
+
+----waitfor  delay 'time'     等待指定时间(间隔时间)
+----waitfor  time 'time'    直到指定时间(指定某一时间)
+
+**例:
+	waitfor time '11:20:50'
+	select * from grade
+
+	waitfor delay '0:0:5'
+	select * from grade
+
+

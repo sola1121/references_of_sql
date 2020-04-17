@@ -1,0 +1,28 @@
+create 创建
+alter  modify  updata 修改
+drop  delete 删除
+
+Intersect  --交
+Union       --并
+Except      --差
+Cross        --笛卡儿积
+
+select 
+
+
+.mdf    主要数据文件
+.ndf     次要数据文件
+.ldf      日志数据文件
+
+
+len(目的数据) 逻辑运算符 数值
+
+go 完成上一项后执行之后
+
+
+* 表示"所有"
+
+
+year(datetime) 提取日期型数据的年
+month(datetime) 提取日期型数据的月
+day(datetime) 提取日期型数据的日期

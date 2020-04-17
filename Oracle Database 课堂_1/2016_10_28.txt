@@ -1,0 +1,46 @@
+     SELECT ON dept              SELECT ON dept
+                            
+Baber ------------->   BLAKE-------------------->CLARK
+     WITH GRANT OPTION
+
+--sqlplus  barber
+	GRANT  SELECT ON dept  TO  Blake
+	WITH  GRANT  OPTION;
+           --切换至blake
+	GRANT  SELECT  ON   barber.dept TO  Clark;
+           --切换到barber
+                  REVOKE  SELECT  ON dept  FROM  Blake;
+             --Blake和Clark的查询权限被同时收回
+
+--pl/sqldeveloper  Blake
+	SELECT  *  FROM  barber.dept;
+            --切换到clark
+	SELECT * FROM  barber.dept;
+
+ user_role_privs               --角色
+ user_tab_privs_recd      --对象权限
+ user_sys_privs                 --系统权限
+
+--查看角色所包含的权限
+SELECT *  FROM  role_sys_privs
+WHERE  role='MANAGER'
+
+SELECT *  FROM  role_tab_privs
+WHERE  role='MANAGER';
+
+SELECT *  FROM role_role_privs
+WHERE  role='DBA';
+
+
+     
+   CREATE  SEQUENCE             CREATE  SEQUENCE
+SYS------------------->Barber --------------------->   BLAKE
+   WITH   ADMIN OPTION  
+
+     REVOKE  CREAET 
+SYS------------------->Barber --------------------->   BLAKE
+        SEQUENCE
+---当收回Barber的CREATE  SEQUENCE权限时, Blake的不会被级联收回
+
+
+

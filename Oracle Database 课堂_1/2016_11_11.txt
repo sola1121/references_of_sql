@@ -1,0 +1,22 @@
+INSERT INTO  empvu20(empno, ename, deptno)
+VALUES (1088, 'JIM', 10);
+
+SELECT  *  FROM  empvu20;
+
+rollback;
+
+ CREATE OR REPLACE VIEW empvu20
+  AS SELECT	*
+  FROM			emp
+  WHERE		deptno = 20
+  WITH CHECK OPTION CONSTRAINT empvu20_ck;
+
+INSERT INTO  empvu20(empno, ename, deptno)
+VALUES (1088, 'JIM', 10);                         ---X
+ 
+UPDATE   empvu20  SET  deptno=30;    ---X
+
+SELECT rownum AS  RANK,  ename,sal FROM emp
+ORDER BY sal DESC
+WHERE  rownum <=3;
+

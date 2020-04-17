@@ -1,0 +1,26 @@
+SELECT    'The salary of ' || Initcap(ename) || ' is ' ||sal ||
+               '$ per month, who is a ' || 
+                lower(job) ||'.'       "Employee's Information"
+FROM     emp
+WHERE    Upper(ename) LIKE '%E_';
+
+SELECT   DISTINCT  job  "Available Jobs"
+FROM    emp
+ORDER  BY    job;
+
+SELECT     ename,  sal
+FROM	emp
+WHERE   sal  BETWEEN  1500  AND  2850;
+
+SELECT     ename,  sal
+FROM  emp
+WHERE   sal NOT BETWEEN  1500  AND  2850;
+
+SELECT   ename,  job
+FROM    emp
+WHERE  job  NOT  IN ('CLERK','ANALYST','MANAGER');
+
+
+SELECT   	empno, ename, sal*12 annsal
+FROM     	emp
+ORDER BY  annsal  ,  ename  DESC ;

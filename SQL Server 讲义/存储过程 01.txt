@@ -1,0 +1,91 @@
+什么是存储过程?
+SQL Server提供了一种方法：可以将一些预先编译的SQL语句集中起来由SQL Server数据库服务器来完成以实现某个任务，这就是存储过程。
+存储过程常驻在SQL Server数据库服务器的内存中。
+
+用户登陆的(假设平台Java)
+
+方法一(安全性低):
+"select * from Student where StudentID=' "+用户名+" ' and classID=' "+密码+" ' 
+若输入 任意字符 -- 1=1就直接进了
+
+方法二:
+select * from Student where StudentID=@userID and ClassID=@pwd
+
+方法三:
+create proc userlogin
+@userID as char(12), @pwd as char(8)
+as
+select * from Student where StudentID=@userID and ClassID=@pwd
+go
+userlogin 'St0109010001','Cs010901'
+
+
+
+
+--------------------------------存储过程------------------------------
+
+
+---格式
+
+create proc 存储过程名
+@参数1 as 数据类型1[=default] [output], ...                      ---参数后加上output表明是输出参数
+as
+程序代码       
+
+
+**例:
+	create proc p_select_student
+	as
+	select * from student        
+
+---调用
+
+存储过程名  实参
+
+exec  存储过程名  实参
+
+**例:
+	alter proc p2
+	@sna varchar(18)
+	as
+	select * from Student where StudentName = @sna
+	go
+	p2'李平'
+
+	alter proc searchgrade
+	@sno varchar(12), @CName varchar(16)
+	as
+	select StudentName, Coursename, Grade from Grade
+	join Student on Student.StudentID=grade.StudentID
+	join Course on Course.CourseID=Grade.CourseID
+	where CourseName=@CName or Student.StudentName=@sno
+	go
+	searchgrade'张宏',''     --顺序乱的话要加上变量名
+
+	alter proc ctavg
+	@cname varchar(18), @tname varchar(12) output, @avgg float output
+	as
+	select @tname=Teacher.Teachername from Teacher
+	join Schedule on Schedule.TeacherID=Teacher.TeacherID
+	join Course on Course.CourseID=Schedule.CourseID
+	where CourseName=@cname
+	select @avgg=avg(grade) from Grade
+	join course on course.CourseID=grade.CourseID
+	where CourseName=@cname
+	return @@rowcount
+	go
+	declare @tname varchar(12), @avgg float, @row int
+	exec ctavg 'JAVA程序设计', @tname output, @avgg output     (--打乱顺序 @row=catvg, @tname=@tname output,  	@avgg=@avgg  output)
+	select @tname, @avgg, @row
+
+	create proc insertDepartment
+	@ID varchar(6), @Dname varchar(12), @master varcahr(18), @Num int
+	as
+	insert @ID, @Dname, @master, @Num from Department
+
+	create proc p1 @dname as varchar(30)
+	as
+	select t.* from teacher t
+	join department d on d.deptno=t.deptno
+	where dname=@dname
+	

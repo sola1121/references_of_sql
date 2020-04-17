@@ -1,0 +1,22 @@
+SELECT   w.empno, w.ename, w.mgr, m.empno,  m.ename
+FROM     emp w LEFT JOIN  emp  m
+ON          w.mgr = m.empno;
+
+---查询每个员工的下属人数
+   ename             managed emp
+----------------------------------
+   KING                  3
+   BLAKE               5
+   .....
+SELECT   m.ename,  count(w.empno)  "managed emp"
+FROM     emp w JOIN  emp  m
+ON          w.mgr = m.empno
+GROUP  BY    m.ename;
+
+
+SELECT   m.ename,  count(w.empno)  "managed emp"
+FROM     emp w JOIN  emp  m
+ON          w.mgr = m.empno
+GROUP  BY    m.ename;
+
+

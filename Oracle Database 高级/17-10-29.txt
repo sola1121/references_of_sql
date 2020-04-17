@@ -1,0 +1,479 @@
+查看监听状态
+[grid@db ~]$ lsnrctl status
+
+创建监听
+
+netca  具有图形界面的监听创建
+
+tnsping
+
+查看权限视图
+SQL> desc role_sys_privs;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLE                                      NOT NULL VARCHAR2(30)
+ PRIVILEGE                                 NOT NULL VARCHAR2(40)
+ ADMIN_OPTION                                       VARCHAR2(3)
+ 
+ SQL> desc role_role_privs;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLE                                      NOT NULL VARCHAR2(30)
+ GRANTED_ROLE                              NOT NULL VARCHAR2(30)
+ ADMIN_OPTION                                       VARCHAR2(3)
+
+
+查看表空间
+
+
+创建表空间
+
+
+查看表空间的信息
+SQL> conn sys as sysdba     
+Enter password: 
+Connected.
+SQL> desc dba_data_files;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ FILE_NAME                                          VARCHAR2(513)
+ FILE_ID                                            NUMBER
+ TABLESPACE_NAME                                    VARCHAR2(30)
+ BYTES                                              NUMBER
+ BLOCKS                                             NUMBER
+ STATUS                                             VARCHAR2(9)
+ RELATIVE_FNO                                       NUMBER
+ AUTOEXTENSIBLE                                     VARCHAR2(3)
+ MAXBYTES                                           NUMBER
+ MAXBLOCKS                                          NUMBER
+ INCREMENT_BY                                       NUMBER
+ USER_BYTES                                         NUMBER
+ USER_BLOCKS                                        NUMBER
+ ONLINE_STATUS                                      VARCHAR2(7)
+ 
+ SQL> select file_name, tablespace_name, status from dba_data_files;
+
+FILE_NAME
+--------------------------------------------------------------------------------
+TABLESPACE_NAME                                              STATUS
+------------------------------------------------------------ ------------------
++DATA/db1/datafile/users.259.945820717
+USERS                                                        AVAILABLE
+
++DATA/db1/datafile/undotbs1.258.945820717
+UNDOTBS1                                                     AVAILABLE
+
++DATA/db1/datafile/sysaux.257.945820717
+SYSAUX                                                       AVAILABLE
+
+
+FILE_NAME
+--------------------------------------------------------------------------------
+TABLESPACE_NAME                                              STATUS
+------------------------------------------------------------ ------------------
++DATA/db1/datafile/system.256.945820717
+SYSTEM                                                       AVAILABLE
+
++DATA/db1/datafile/example.265.945820829
+EXAMPLE                                                      AVAILABLE
+
+
+SQL> create user alice identified by alice;
+
+User created.
+
+SQL> grant create session to alice;
+
+Grant succeeded.
+
+SQL> select table_name from hr.user_tables;
+select table_name from hr.user_tables
+                          *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> conn hr/hr
+Connected.
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+------------------------------------------------------------
+COUNTRIES
+JOB_HISTORY
+EMPLOYEES
+JOBS
+DEPARTMENTS
+LOCATIONS
+REGIONS
+
+7 rows selected.
+
+SQL> conn alice/alice
+Connected.
+SQL> conn sys/ as sysdba
+Enter password: 
+Connected.
+SQL> show user
+USER is "SYS"
+SQL> desc role_sys_privs;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLE                                      NOT NULL VARCHAR2(30)
+ PRIVILEGE                                 NOT NULL VARCHAR2(40)
+ ADMIN_OPTION                                       VARCHAR2(3)
+
+SQL> desc role_role_privs;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLE                                      NOT NULL VARCHAR2(30)
+ GRANTED_ROLE                              NOT NULL VARCHAR2(30)
+ ADMIN_OPTION                                       VARCHAR2(3)
+
+SQL> select username, default_tablespace, temporary_tablespacce from dba_users;
+select username, default_tablespace, temporary_tablespacce from dba_users
+                                     *
+ERROR at line 1:
+ORA-00904: "TEMPORARY_TABLESPACCE": invalid identifier
+
+
+SQL> desc dba_users;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ USERNAME                                  NOT NULL VARCHAR2(30)
+ USER_ID                                   NOT NULL NUMBER
+ PASSWORD                                           VARCHAR2(30)
+ ACCOUNT_STATUS                            NOT NULL VARCHAR2(32)
+ LOCK_DATE                                          DATE
+ EXPIRY_DATE                                        DATE
+ DEFAULT_TABLESPACE                        NOT NULL VARCHAR2(30)
+ TEMPORARY_TABLESPACE                      NOT NULL VARCHAR2(30)
+ CREATED                                   NOT NULL DATE
+ PROFILE                                   NOT NULL VARCHAR2(30)
+ INITIAL_RSRC_CONSUMER_GROUP                        VARCHAR2(30)
+ EXTERNAL_NAME                                      VARCHAR2(4000)
+ PASSWORD_VERSIONS                                  VARCHAR2(8)
+ EDITIONS_ENABLED                                   VARCHAR2(1)
+ AUTHENTICATION_TYPE                                VARCHAR2(8)
+
+SQL> select username,  DEFAULT_TABLESPACE,  TEMPORARY_TABLESPACE from dba_users;
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+MGMT_VIEW
+SYSTEM
+TEMP
+
+SYS
+SYSTEM
+TEMP
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+
+SYSTEM
+SYSTEM
+TEMP
+
+DBSNMP
+SYSAUX
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+TEMP
+
+SYSMAN
+SYSAUX
+TEMP
+
+ALICE
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+USERS
+TEMP
+
+SCOTT
+USERS
+TEMP
+
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+HR
+USERS
+TEMP
+
+OUTLN
+SYSTEM
+TEMP
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+
+FLOWS_FILES
+SYSAUX
+TEMP
+
+MDSYS
+SYSAUX
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+TEMP
+
+ORDSYS
+SYSAUX
+TEMP
+
+EXFSYS
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+SYSAUX
+TEMP
+
+WMSYS
+SYSAUX
+TEMP
+
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+APPQOSSYS
+SYSAUX
+TEMP
+
+APEX_030200
+SYSAUX
+TEMP
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+
+OWBSYS_AUDIT
+SYSAUX
+TEMP
+
+ORDDATA
+SYSAUX
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+TEMP
+
+CTXSYS
+SYSAUX
+TEMP
+
+ANONYMOUS
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+SYSAUX
+TEMP
+
+XDB
+SYSAUX
+TEMP
+
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+ORDPLUGINS
+SYSAUX
+TEMP
+
+OWBSYS
+SYSAUX
+TEMP
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+
+SI_INFORMTN_SCHEMA
+SYSAUX
+TEMP
+
+OLAPSYS
+SYSAUX
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+TEMP
+
+ORACLE_OCM
+USERS
+TEMP
+
+XS$NULL
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+USERS
+TEMP
+
+BI
+USERS
+TEMP
+
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+PM
+USERS
+TEMP
+
+MDDATA
+USERS
+TEMP
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+
+IX
+USERS
+TEMP
+
+SH
+USERS
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+TEMP
+
+DIP
+USERS
+TEMP
+
+OE
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+USERS
+TEMP
+
+APEX_PUBLIC_USER
+USERS
+TEMP
+
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+SPATIAL_CSW_ADMIN_USR
+USERS
+TEMP
+
+SPATIAL_WFS_ADMIN_USR
+USERS
+TEMP
+
+USERNAME
+------------------------------------------------------------
+DEFAULT_TABLESPACE
+------------------------------------------------------------
+TEMPORARY_TABLESPACE
+------------------------------------------------------------
+
+
+37 rows selected.
+
+SQL> 
+
+SQL> revoke creat session from alice
+  2  ;
+revoke creat session from alice
+       *
+ERROR at line 1:
+ORA-00990: missing or invalid privilege
+
+
+SQL> show user;
+USER is "SYS"
+SQL> drop user alice;
+
+User dropped.

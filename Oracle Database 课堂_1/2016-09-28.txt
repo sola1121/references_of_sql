@@ -1,0 +1,42 @@
+SELECT   ename,  emp.deptno,  dept.deptno, dname 
+FROM    emp  CROSS  JOIN  dept
+ORDER  BY  empno,   dept.deptno;
+
+SMITH     20    10   ACCOUNTING
+SMITH     20    20   RESEARCH
+SMITH     20    30   SALES
+SMITH     20    40   OPERATIONS
+
+SELECT   ename,  emp.deptno,  dept.deptno, dname 
+FROM    emp  JOIN  dept
+ON         emp.deptno = dept.deptno
+ORDER  BY  empno,   dept.deptno;
+
+SELECT  ename,  dname, loc
+FROM   emp NATURAL  JOIN  dept   ---自然连接
+WHERE  comm  IS  NOT  NULL;    
+<=>
+SELECT  ename,  dname, loc
+FROM   emp  e JOIN  dept  d
+ON       e.deptno = d.deptno
+WHERE  comm  IS  NOT  NULL;
+<=>
+SELECT  ename,  dname, loc
+FROM   emp  JOIN  dept   
+USING (deptno)
+WHERE  comm  IS  NOT  NULL;  
+
+
+SELECT  ename,  deptno, dname
+FROM   emp NATURAL  JOIN  dept   ---自然连接
+<=>
+SELECT  ename,  deptno,dname
+FROM   emp  JOIN  dept   
+USING (deptno)
+<=>
+SELECT  ename,  e.deptno, loc
+FROM   emp  e JOIN  dept  d
+ON       e.deptno = d.deptno
+
+
+

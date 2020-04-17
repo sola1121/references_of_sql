@@ -1,0 +1,6 @@
+[1126/130526:ERROR:renderer_main.cc(203)] Running without renderer sandbox
+[1126/130528:ERROR:child_discardable_shared_memory_manager.cc(266)] size: 4194304
+[1126/130530:WARNING:raw_channel_win.cc(473)] WriteFile: 管道正在被关闭。 (0xE8)
+[1126/130530:WARNING:channel.cc(549)] Failed to send message to ack remove remote endpoint (local ID 1, remote ID 1)
+[1126/130530:WARNING:channel.cc(315)] RawChannel write error
+[1126/130530:ERROR:window_impl.cc(115)] Failed to unregister class Chrome_WidgetWin_0. Error = 0

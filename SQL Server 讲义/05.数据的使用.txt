@@ -1,0 +1,342 @@
+----------------------------------------------输入数据-----------------------------------
+
+
+insert 表名[(列名)]
+values(值)
+
+
+
+
+***例子:
+
+	insert Class(ClassID,ClassName,StudentNum)
+	values('143201','信息系统1',default)
+
+
+
+-----------------------------------------------修改数据------------------------------------
+
+
+update 表名
+set 列名1=值1,列名2=值2,...
+where 条件
+
+***例子:
+
+	update Department
+	set DepartmentName='C++'
+	where DepartmentID = 'IT'
+
+
+	update Student
+	set HomeAddr=null
+	where HomeAddr=''
+	select * from Student
+
+
+
+-----------------------------------------------删除数据--------------------------------------
+
+
+delete 表名
+where 条件
+
+
+***例子:
+
+	delete Student
+	where Sex='男'
+
+
+
+------------------------------------------查询数据----------------------------------------------
+
+
+select 目标列1,目标列2,...
+from 表名
+
+
+rtrim()  去掉右边的占位空字符
+ltrim()  去掉左边的占位空字符
+
+***例: 
+	select * from Student
+
+	select StudentName,Sex from Student
+
+	select rtrim(StudentName)+'是'+Sex+'的.' from Student 
+
+	select StudentName,Sex,year(getdate())-year(birth) as age from Student   --as可省,添加列标题
+
+
+
+select 目标列1,目标列2,...
+from 表名
+where 条件
+
+
+列名 between [not] 数据1 and 数据2    等同于 >= <= and
+
+列名 [not] in (value1,value2,...)   等同于 = or =
+
+列名 IS [not] null
+
+
+***例:      
+           逻辑运算符   +  -   *  /  =  >  >=  <=  != 
+
+	select StudentName,Sex,Birth from Student where year(birth)>1990
+					        where birth >='1991-1-1'
+
+	select StudentName,Sex,Birth from Student where year(birth)=1992 and Sex = '男'
+
+            匹配符   %   _   []   ^     模糊匹配格式: expression [not] like 'string'
+
+	select * from Student where StudentName like '李%_'
+
+
+
+--------------------------------------------------单复杂表查询---------------------------------------------------
+
+
+select [ALL*|*DISTINCT]  [top integer *|* top integer PERCENT] 目标列1,目标列2,...
+from 表名
+where 条件
+order by 列名1 asc 升序/desc 降序
+
+
+***例:
+	select top 3 * from Student order by Birth asc
+
+
+
+
+-
+-
+-
+
+DISTINCT   ---从结果数据中删除重复的行
+
+select [ALL*|*DISTINCT]  目标列1,目标列2,...
+from 表名1,表名2,...
+where 条件
+
+
+***例:
+	select distinct StudentID from Grade
+
+
+
+
+
+-
+-
+-
+
+---Top 关键字---
+
+
+返回表中前面一定的数据
+
+select [top integer *|* top integer PERCENT] 目标列名
+from 表名 
+
+
+***例:
+	select top 3 * from Grade
+	select top 3 StudentID from Grade
+
+
+
+------------------------------------------------------------连接查询-----------------------------------------------
+
+指定每个表中用于连接的公共列
+
+指定用于比较各列的值的逻辑运算符 (= ,< , >)
+	
+select 目标列
+from 表名1
+[连接类型] join 表名2 on 表1.列名=表2.列名
+[连接类型] join 表名3 on 表1.列名=表2.列名
+[连接类型] join 表名4 on 表1.列名=表2.列名
+...
+where 条件
+
+
+
+连接类型:
+
+   内连接
+
+   外链接:
+	左连接 left [outer] join
+	右连接 right [outer] join
+	全连接 full [outer] join
+
+
+
+***例:
+	select Student.StudentID,StudentName,Grade from Student join Grade on Grade.StudentID=Student.StudentID
+
+	select Student.StudentID,StudentName,Course.CourseName,Grade.Grade
+	from Student
+	join Grade on Grade.StudentID=Student.StudentID
+	join Course on Course.CourseID=Grade.CourseID
+
+	select top 1 StudentID,Grade
+	from Grade g
+	join Course c on g.CourseID=c.CourseID
+	where CourseName='java程序设计'
+	order by Grade desc
+
+
+----------------------------------------------------编程型--------------------------------------------------
+
+
+declare @cid char(8)
+select @cid=ClassID from Student where StudentName='张宏'
+Select * from Student where Classid=@cid
+
+
+----------------------------------------------------子查询--------------------------------------------------
+
+
+where 列名 in*|*逻辑运算符 (子查询)
+
+用于单表的复合查询
+
+
+***例:
+	select * from Student where ClassID=(select ClassID from Student where StudentName='张宏')
+
+	select StudentID, Grade from Grade where CourseID=(select CourseID from Course where CourseName='Java程序设计')
+
+
+-------------------------------------------------使用查询修改数据---------------------------------------------
+
+
+update 表名
+set 列名=值
+	[from 表1 join 表2 on 表1.列=表2.列]
+	*|*
+	[select 列名 from表名 where 列名 in*|*逻辑运算符 (子查询)]
+where 条件
+
+
+***例:
+	update grade set Grade=Grade-5
+	from Grade 
+	join Student on Student.StudentID=Grade.StudentID
+	where StudentName='张宏'
+
+	update grade set Grade=Grade+5
+	from Grade 
+	where StudentID=(select StudentID from Student where StudentName='张宏')
+
+
+-------------------------------------------------使用查询删除数据-------------------------------------------------
+
+
+delete 表名
+	[from 表1 join 表2 on 表1.列=表2.列]
+	*|*
+	[select 列名 from表名 where 列名 in*|*逻辑运算符 (子查询)]
+where 条件
+
+
+***例:
+	delete grade 
+	join Student on Student.StudentID=Grade.StudentID
+	where StudentName='张宏'
+
+	delete grade
+	where StudentID=(select StudentID from Student where StudentName='张宏')
+
+---------------------------------------------------使用查询插入数据-------------------------------------------------
+
+
+insert 表名 values(值)   ---单行
+insert 表名 select语句   ---多行
+
+
+***例:
+	insert Stu(StuID,StuName) select StudentID, StudentName from Student
+
+
+-
+-
+-
+----select into 语句----
+
+select 目标列 into 表名
+
+***例:
+	select StudentID, StudentName into Stu from Student
+
+
+--相关子查询
+
+
+
+------------------------------------------------------数据汇总----------------------------------------------------------
+
+count()  计数
+sum()  求和
+avg()  平均值
+max()  最大值
+min()  最小值
+
+
+***例:
+	select count(*) from Student where Sex='男'
+
+	select avg(grade) 平均成绩,max(grade) 最大值,min(grade) 最小值,sum(grade) 总和,count(CourseID) 课程数 
+	from grade 
+	where StudentID in(select StudentID from student where StudentName='张宏')
+
+	select avg(grade) 平均成绩,max(grade) 最大值,min(grade) 最小值,sum(grade) 总和,count(CourseID) 课程数 
+	from grade 
+	join Student on Student.StudentID=Grade.StudentID
+	where StudentName='张宏'
+
+-----------------------------------------------------------分类汇总-------------------------------------------------------
+
+
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+
+
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+HAVING aggregate_function(column_name) operator value
+
+	 
+***例:
+	select Sex, count(*) Num from Student group by Sex
+
+	select Student.StudentID,StudentName,
+	avg(grade) 平均成绩,max(grade) 最大值,min(grade) 最小值,sum(grade) 总和,count(CourseID) 课程数 
+	from grade 
+	right join Student on Student.StudentID=Grade.StudentID
+	group by Student.StudentID,Student.StudentName
+
+	SELECT Customer,SUM(OrderPrice) FROM Orders
+	GROUP BY Customer
+	HAVING SUM(OrderPrice)<2000
+
+-----------------------------------------------------明细汇总---------------------------------------------
+
+
+compute by
+
+
+
+
+-
+-
+-
+---case 函数

@@ -1,0 +1,55 @@
+1.  SELECT  last_name, 
+TRUNC(MONTHS_BETWEEN(sysdate,hire_date)/12)  YEARS,
+TRUNC(MOD(MONTHS_BETWEEN(sysdate,hire_date),12))  MONTHS
+    FROM    employees;
+
+2.  SELECT  last_name, salary,
+            decode(commission_pct, NULL, 'No','Yes')  commission
+    FROM    employees;
+
+3.  SELECT  count(*)
+    FROM    employees
+    WHERE   last_name LIKE '%n';
+
+    SELECT  count(*)
+    FROM    employees
+    WHERE   substr(last_name,-1) ='n';
+                     substr(last_name, length(last_name))
+
+
+5.  SELECT  d.department_id,department_name,location_id, COUNT(employee_id)
+    FROM  employees e  RIGHT JOIN  departments d
+    ON    e.department_id = d.department_id
+    GROUP  BY  d.department_id,department_name,location_id
+
+6.  SELECT  DISTINCT job_id
+    FROM    employees
+    WHERE   department_id IN (10,20);
+
+7.  SELECT  job_id,  count(employee_id)  frequency
+    FROM    departments  JOIN  employees
+    USING(department_id)
+    WHERE   department_name IN ('Administration','Executive')
+    GROUP  BY  job_id
+    ORDER  BY  frequency DESC
+
+
+
+CREATE SYNONYM	depts
+FOR	  departments
+
+SELECT  * FROM user_synonyms;
+
+SELECT  sequence_name FROM user_sequences;
+
+
+
+
+
+
+
+
+
+
+
+

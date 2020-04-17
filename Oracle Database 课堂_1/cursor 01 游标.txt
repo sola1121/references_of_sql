@@ -1,0 +1,34 @@
+declare
+cursor cur_dept is select * from dept;
+v_dept cur_dept%rowtype;
+begin
+  open cur_dept;
+  loop
+    fetch cur_dept into v_dept;
+    exit when cur_dept%notfound;
+    dbms_output.put_line(v_dept.deptno||v_dept.dname);
+  end loop;
+  close cur_dept;
+  end;
+
+
+
+declare
+cursor cur_dept is select * from dept;
+begin
+  for v_dept in cur_dept loop
+    dbms_output.put_line(v_dept.deptno||v_dept.dname);
+    end loop;
+    end;
+
+
+
+begin
+  for v_dept in (select * from dept) loop
+    dbms_output.put_line(v_dept.deptno||v_dept.dname);
+    end loop;
+end;
+
+
+
+

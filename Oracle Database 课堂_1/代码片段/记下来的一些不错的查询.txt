@@ -1,0 +1,35 @@
+select ename, emp.deptno, dept.deptno,dname
+from emp cross join dept
+order by empno;
+
+select ename, emp.deptno, dept.deptno,dname from emp
+join dept on emp.deptno=dept.deptno
+where emp.deptno=dept.deptno;
+
+
+
+非等式链接
+SELECT 	e.ename, e.sal, s.grade
+FROM	emp e,   salgrade s
+WHERE 	e.sal
+BETWEEN    s.losal AND s.hisal;
+
+
+
+
+
+
+
+select ename,dname,dept.loc from emp
+join dept on emp.deptno=dept.deptno
+where dept.loc='CHICAGO'
+等价的
+select ename,dname,dept.loc from emp
+natural join dept                                           --自然连接
+等价的
+select ename,dname,dept.loc from emp
+join dept  using(deptno)
+
+
+
+虚拟表(用于试验)  dual

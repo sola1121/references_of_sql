@@ -1,0 +1,2 @@
+select salary from employees;
+select salary/21 ÈÕÐ½Ë® from employees;

@@ -1,0 +1,38 @@
+select  ename AS name,  sal  salary
+FROM   emp;
+
+--查看windows服务
+services.msc
+
+--错误1
+account   is  lock
+以sys as  sysdba账号登陆，然后将用户解锁
+
+
+SELECT  ename, 12*sal+NVL(comm,0), sal
+FROM    emp
+WHERE   ename='KING'
+
+SELECT  ename, 12*sal+NVL(comm,0), sal, comm
+FROM    emp
+
+SELECT  ename, sal,comm
+FROM    emp
+WHERE   comm = null;
+
+SELECT  ename, sal,comm
+FROM    emp
+WHERE   comm != null;
+
+SELECT  ename, sal,comm
+FROM    emp
+WHERE   comm is null;
+
+SELECT  ename, sal,comm
+FROM    emp
+WHERE   comm is not null;
+
+SELECT  ename, sal,comm
+FROM    emp
+WHERE   not(comm is null);
+

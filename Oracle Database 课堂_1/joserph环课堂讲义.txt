@@ -1,0 +1,20 @@
+declare
+k integer:=0;    v_idx integer:=0;
+  Type joserph IS TABLE OF integer INDEX BY BINARY_INTEGER;
+  v_soilders joserph;
+begin
+  for i in 1..10 LOOP   v_soilders(i):=i;   
+  END LOOP;
+  WHILE v_soilders.count>=1 LOOP
+     if v_soilders.next(v_idx) is not null then       
+ 	v_idx :=v_soilders.next(v_idx );
+     else
+ 	v_idx :=v_soilders.first;       
+     end if;
+     k:=k+1;
+     if mod(k,3)=0 then
+       DBMS_OUTPUT.put_line(v_soilders(v_idx));
+       v_soilders.delete(v_idx);           
+     end if;
+  END LOOP;
+end;

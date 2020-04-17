@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------------------------创建数库---------------------------------------------------------------------------------------------
+
+create database 数据库名
+on 
+(数据文件1参数),(数据文件2参数)......
+log on
+(日志文件1参数),(日志文件2参数)......
+
+name='逻辑名',
+filename='物理路径及文件名',
+size=初始大小(单位为MB),
+maxsize=最大大小(单位为MB),
+filegrowth=文件增长率(单位为MB或百分比)
+
+
+***例:
+	create database studentT1
+	on
+	( 
+		name = 'studentT1_data',
+		filename = 'd:\SQL server\db\studentT1_data.mdf',
+		size = 5,
+		maxsize = 30,
+		filegrowth = 10%
+	)
+	log on
+	(
+		name = 'studentT1_log',
+		filename = 'd:\SQL server\db\studentT1_log.ndf',
+		size = 1,
+		maxsize = 10,
+		filegrowth = 1MB
+	)

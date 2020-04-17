@@ -1,0 +1,15 @@
+CREATE  VIEW  salvu30(EMPLOYEE_NUMBER,NAME,SALARY)
+AS 
+  SELECT  empno, ename, sal  FROM  emp
+ WHERE  deptno=30;
+
+
+
+CREATE  INDEX  ind_emp_ename
+ON  emp( UPPER(ename));
+
+SELECT  *  FROM emp
+WHERE   ename='MARY';   X
+
+SELECT  *  FROM emp
+WHERE   UPPER(ename)='MARY';

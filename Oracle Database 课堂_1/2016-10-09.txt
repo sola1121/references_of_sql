@@ -1,0 +1,17 @@
+SQL>  SHOW  USER
+   user is  "SYS"
+
+SQL>  ALTER  USER  hr  IDENTIFIED  BY  hr   ACCOUNT  UNLOCK;
+  用户已更改  、 user  is  altered
+
+SQL> DESC  hr.employees
+
+SQL> CONN  hr/hr
+已连接
+
+SQL>DESC  employees
+
+
+SELECT   months_between(sysdate,  TO_DATE('2018-07-01','YYYY-MM-DD))
+FROM    dual;
+

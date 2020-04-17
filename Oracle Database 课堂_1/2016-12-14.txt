@@ -1,0 +1,57 @@
+
+---SCOTT
+
+DELTE  FROM  dept
+WHERE  deptno=10;
+
+
+DECLARE
+  e_invalid_dept EXCEPTION;
+BEGIN
+  UPDATE	dept
+  SET	loc = '&dept_loc'
+  WHERE	deptno = &deptno;
+  IF SQL%NOTFOUND THEN
+    ---  RAISE e_invalid_dept;
+    RAISE_APPLICATION_ERROR(-20001, 'Invalid deptno');
+  END IF;
+  COMMIT;
+EXCEPTION
+  WHEN e_invalid_dept   THEN
+    DBMS_OUTPUT.PUT_LINE('Invalid dept number.');
+ WHEN OTHERS  THEN
+    DBMS_OUTPUT.PUT_LINE(SQLCODE || ':' || SQLERRM);
+END;
+
+
+SHOW  SGA
+
+SHOW  PARAMETER   SGA
+
+ALTER  SYSTEM   SET  sga_max_size=XXXXX    scope=spfile;
+
+ HIT_RATIO
+
+SHOW  PARAMETER  shared
+
+SHOW PARAMETER   db_block_size
+SHOW PARAMETER   log_buffer
+SHOW PARAMETER   memory
+
+ memory =  sga + aggregate pga
+
+ CREATE   GLOBAL TEMPORARY  TABLE   joserph
+(  id  number,    quit_seq  number);
+
+
+
+
+
+
+
+
+
+
+
+
+update   dept   set loc='CD'   where  deptno=100;

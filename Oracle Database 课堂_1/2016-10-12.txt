@@ -1,0 +1,69 @@
+SELECT e.ename  "Employee", e.empno "Emp#", m.ename "Manager", m.empno "Mgr#"
+FROM      emp e  JOIN  emp m
+ON    e.mgr=m.empno;
+
+SELECT  ENAME,JOB,DEPTNO,DNAME
+FROM   emp  NATURAL  JOIN  dept
+WHERE  loc='DALLAS';
+
+
+SELECT  ENAME,JOB,DEPTNO,DNAME
+FROM   emp e   JOIN  dept  d
+ON        e.deptno = d.deptno
+WHERE  loc='DALLAS';
+
+SELECT ENAME, DNAME
+FROM   emp  NATURAL JOIN dept
+WHERE  ename LIKE '%A%';
+
+
+SELECT ENAME, DNAME
+FROM   emp e   JOIN  dept  d
+ON        e.deptno = d.deptno
+WHERE  ename LIKE '%A%';
+
+
+4. SELECT  employee_id,first_name, 	last_name,email,phone_number,hire_date
+    FROM  employees
+     WHERE  hire_date > to_date('1997-12-31','yyyy-mm-dd')
+                     AND  job_id LIKE '%CLERK%';
+
+    SELECT  employee_id,first_name, 	last_name,email,phone_number,hire_date
+    FROM  employees
+    WHERE  to_char(hire_date,'YYYY') >'1997'
+                     AND  job_id LIKE '%CLERK%';
+
+5.  SELECT  last_name, job_ID, salary, commission_pct 
+     FROM    employees
+     WHERE  commission_pct IS NOT NULL
+     ORDER   BY  salary  DESC;
+
+6.  SELECT 'The salary of ' || last_name || ' after a 10% raise is ' 
+       || salary*1.1 "New salary"
+ FROM   employees
+ WHERE  commission_pct IS NULL;
+
+7. SELECT  department_name, location_id, last_name,
+	 job_id,  salary 
+     FROM   departments  NATURAL  JOIN  employees
+     WHERE   location_id = 1800;
+
+
+
+SELECT   ADD_MONTHS(sysdate, 400)  FROM  dual;
+
+
+SELECT   NEXT_DAY(sysdate, 4),  NEXT_DAY(sysdate, 'WEDNSDAY') FROM  dual;
+
+
+SELECT   CAST('01-JUL-18' AS DATE) -sysdate
+FROM  dual;
+
+SELECT   TO_DATE('2018-07-01','YYYY-MM-DD') -sysdate
+FROM  dual;
+
+
+
+
+
+
